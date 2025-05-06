@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تواصل معنا - الحقيبة الذكية للأدوية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+     :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            flex-direction: column;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            color: var(--light-color);
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-links a i {
+            margin-left: 10px;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .language-switcher {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0 0.3rem;
+            font-family: inherit;
+        }
+
+        .language-switcher button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-switcher button.active {
+            background: var(--secondary-color);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            transition: var(--transition);
+            min-height: calc(100vh - 100px);
+            padding-bottom: 60px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        /* Content Styles */
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 100px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            margin-right: 280px;
+            transition: var(--transition);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: var(--light-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-color);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+                width: 280px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+                width: 100%;
+            }
+
+            footer {
+                margin-right: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+            
+            .page-title h1 {
+                font-size: 1.5rem;
+            }
+            
+            .section h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* RTL and LTR specific styles */
+        html[dir="rtl"] {
+            .sidebar {
+                right: 0;
+            }
+
+            .main-content {
+                margin-right: 280px;
+                margin-left: 0;
+            }
+
+            footer {
+                margin-right: 280px;
+                margin-left: 0;
+            }
+
+            .section h2::after {
+                right: 0;
+                left: auto;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                transform: translateX(-5px);
+            }
+
+            @media (max-width: 992px) {
+                .sidebar {
+                    transform: translateX(100%);
+                }
+
+                .main-content {
+                    margin-right: 0;
+                }
+
+                footer {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        html[dir="ltr"] {
+            .sidebar {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 280px;
+                margin-right: 0;
+            }
+
+            footer {
+                margin-left: 280px;
+                margin-right: 0;
+            }
+
+            .section h2::after {
+                left: 0;
+                right: auto;
+            }
+
+            .nav-links a i {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                transform: translateX(5px);
+            }
+
+            @media (max-width: 992px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                }
+
+                .main-content {
+                    margin-left: 0;
+                }
+
+                footer {
+                    margin-left: 0;
+                }
+            }
+        }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- الشريط الجانبي -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="nn.jpeg" alt="الحقيبة الذكية" />
+        <h2 id="sidebar-title">الحقيبة الذكية للأدوية</h2>
+        <p id="sidebar-subtitle">ابتكار يحمي ممتلكاتك ويوفر راحتك</p>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> <span class="nav-text" id="home-link">الصفحة الرئيسية</span></a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span class="nav-text" id="about-link">من نحن</span></a></li>
+        <li><a href="features.html"><i class="fas fa-star"></i> <span class="nav-text" id="features-link">مميزات الحقيبة</span></a></li>
+        <li><a href="how-it-works.html"><i class="fas fa-cogs"></i> <span class="nav-text" id="how-it-works-link">كيف تعمل</span></a></li>
+        <li><a href="faq.html"><i class="fas fa-question-circle"></i> <span class="nav-text" id="faq-link">الأسئلة الشائعة</span></a></li>
+        <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> <span class="nav-text" id="contact-link">تواصل معنا</span></a></li>
+      </ul>
+      <div class="language-switcher">
+        <button class="active" data-lang="ar">العربية</button>
+        <button data-lang="en">English</button>
+      </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content" id="main-content">
+      <header>
+        <button class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="page-title">
+          <h1 id="page-title">تواصل معنا</h1>
+        </div>
+      </header>
+
+      <div class="content">
+        <section id="contact" class="section active-section">
+          <h2 id="contact-title">ابقَ على تواصل معنا</h2>
+          <p id="contact-desc">إذا كانت لديك أي استفسارات أو اقتراحات، فلا تتردد في مراسلتنا عبر النموذج أدناه أو عبر وسائل التواصل.</p>
+
+          <form id="contact-form" style="margin-top: 2rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+              <div style="flex: 1; min-width: 250px;">
+                <label for="name" id="label-name">الاسم الكامل</label>
+                <input type="text" id="name" name="name" placeholder="اكتب اسمك الكامل" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid #ccc;" />
+              </div>
+              <div style="flex: 1; min-width: 250px;">
+                <label for="email" id="label-email">البريد الإلكتروني</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid #ccc;" />
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem;">
+              <label for="message" id="label-message">رسالتك</label>
+              <textarea id="message" name="message" rows="6" placeholder="اكتب رسالتك هنا..." required style="width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid #ccc;"></textarea>
+            </div>
+            <button type="submit" style="margin-top: 1.5rem; padding: 0.8rem 2rem; background-color: var(--secondary-color); color: white; border: none; border-radius: 8px; cursor: pointer;" id="submit-button">إرسال</button>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3 id="footer-title">الحقيبة الذكية</h3>
+                <p id="footer-desc">حل مبتكر لحماية ممتلكاتك وتوفير الراحة في حياتك اليومية</p>
+            </div>
+            <div class="footer-column">
+                <h3 id="quick-links-title">روابط سريعة</h3>
+                <p><a href="index.html" style="color: var(--light-color); text-decoration: none;">الصفحة الرئيسية</a></p>
+                <p><a href="features.html" style="color: var(--light-color); text-decoration: none;">المميزات</a></p>
+                <p><a href="how-it-works.html" style="color: var(--light-color); text-decoration: none;">كيف تعمل</a></p>
+                <p><a href="faq.html" style="color: var(--light-color); text-decoration: none;">الأسئلة الشائعة</a></p>
+            </div>
+            <div class="footer-column">
+                <h3 id="contact-footer-title">تواصل معنا</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="address">سلطنة عمان</span></p>
+                <p><i class="fas fa-phone"></i> <span id="phone">+968 96954422</span></p>
+                <p><i class="fas fa-envelope"></i> <span id="email-footer">smartmedicinbag@gmail.com</span></p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p id="copyright-text">&copy; 2023 الحقيبة الذكية. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+  </div>
+
+  <script>
+    const languageSwitcher = document.querySelectorAll('.language-switcher button');
+    const texts = {
+      ar: {
+        'sidebar-title': 'الحقيبة الذكية للأدوية',
+        'sidebar-subtitle': 'ابتكار يحمي ممتلكاتك ويوفر راحتك',
+        'home-link': 'الصفحة الرئيسية',
+        'about-link': 'من نحن',
+        'features-link': 'مميزات الحقيبة',
+        'how-it-works-link': 'كيف تعمل',
+        'faq-link': 'الأسئلة الشائعة',
+        'contact-link': 'تواصل معنا',
+        'page-title': 'تواصل معنا',
+        'contact-title': 'ابقَ على تواصل معنا',
+        'contact-desc': 'إذا كانت لديك أي استفسارات أو اقتراحات، فلا تتردد في مراسلتنا عبر النموذج أدناه أو عبر وسائل التواصل.',
+        'label-name': 'الاسم الكامل',
+        'label-email': 'البريد الإلكتروني',
+        'label-message': 'رسالتك',
+        'submit-button': 'إرسال',
+        'footer-title': 'الحقيبة الذكية',
+        'footer-desc': 'حل مبتكر لحماية ممتلكاتك وتوفير الراحة في حياتك اليومية',
+        'contact-footer-title': 'تواصل معنا',
+        'address': 'سلطنة عمان',
+        'phone': '+968 96954422',
+        'email-footer': 'smartmedicinbag@gmail.com',
+        'copyright-text': '© 2023 الحقيبة الذكية. جميع الحقوق محفوظة.',
+      },
+      en: {
+        'sidebar-title': 'Smart Medicine Bag',
+        'sidebar-subtitle': 'Innovation that protects your belongings and provides comfort',
+        'home-link': 'Home',
+        'about-link': 'About Us',
+        'features-link': 'Features',
+        'how-it-works-link': 'How It Works',
+        'faq-link': 'FAQ',
+        'contact-link': 'Contact Us',
+        'page-title': 'Contact Us',
+        'contact-title': 'Stay in Touch',
+        'contact-desc': 'If you have any inquiries or suggestions, feel free to reach out through the form below or via our contact details.',
+        'label-name': 'Full Name',
+        'label-email': 'Email Address',
+        'label-message': 'Your Message',
+        'submit-button': 'Submit',
+        'footer-title': 'Smart Medicine Bag',
+        'footer-desc': 'An innovative solution to protect your belongings and provide comfort in your daily life.',
+        'contact-footer-title': 'Contact Us',
+        'address': 'Oman',
+        'phone': '+968 96954422',
+        'email-footer': 'smartmedicinbag@gmail.com',
+        'copyright-text': '© 2023 Smart Medicine Bag. All rights reserved.',
+      }
+    };
+
+    languageSwitcher.forEach(button => {
+      button.addEventListener('click', () => {
+        const lang = button.getAttribute('data-lang');
+        Object.keys(texts[lang]).forEach(id => {
+          document.getElementById(id).textContent = texts[lang][id];
+        });
+        languageSwitcher.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      });
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن - الحقيبة الذكية للأدوية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            flex-direction: column;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            color: var(--light-color);
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-links a i {
+            margin-left: 10px;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .language-switcher {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0 0.3rem;
+            font-family: inherit;
+        }
+
+        .language-switcher button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-switcher button.active {
+            background: var(--secondary-color);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            transition: var(--transition);
+            min-height: calc(100vh - 100px);
+            padding-bottom: 60px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        /* Content Styles */
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 100px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            margin-right: 280px;
+            transition: var(--transition);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: var(--light-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-color);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+                width: 280px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+                width: 100%;
+            }
+
+            footer {
+                margin-right: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+            
+            .page-title h1 {
+                font-size: 1.5rem;
+            }
+            
+            .section h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* RTL and LTR specific styles */
+        html[dir="rtl"] {
+            .sidebar {
+                right: 0;
+            }
+
+            .main-content {
+                margin-right: 280px;
+                margin-left: 0;
+            }
+
+            footer {
+                margin-right: 280px;
+                margin-left: 0;
+            }
+
+            .section h2::after {
+                right: 0;
+                left: auto;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                transform: translateX(-5px);
+            }
+
+            @media (max-width: 992px) {
+                .sidebar {
+                    transform: translateX(100%);
+                }
+
+                .main-content {
+                    margin-right: 0;
+                }
+
+                footer {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        html[dir="ltr"] {
+            .sidebar {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 280px;
+                margin-right: 0;
+            }
+
+            footer {
+                margin-left: 280px;
+                margin-right: 0;
+            }
+
+            .section h2::after {
+                left: 0;
+                right: auto;
+            }
+
+            .nav-links a i {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                transform: translateX(5px);
+            }
+
+            @media (max-width: 992px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                }
+
+                .main-content {
+                    margin-left: 0;
+                }
+
+                footer {
+                    margin-left: 0;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="nn.jpeg" alt="الحقيبة الذكية">
+                <h2 id="sidebar-title">الحقيبة الذكية</h2>
+                <p id="sidebar-subtitle">ابتكار يحمي ممتلكاتك ويوفر راحتك</p>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span class="nav-text" id="home">الصفحة الرئيسية</span></a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> <span class="nav-text" id="about">من نحن</span></a></li>
+                <li><a href="features.html"><i class="fas fa-star"></i> <span class="nav-text" id="features">مميزات الحقيبة</span></a></li>
+                <li><a href="how-it-works.html"><i class="fas fa-cogs"></i> <span class="nav-text" id="how-it-works">كيف تعمل</span></a></li>
+                <li><a href="faq.html" class="active"><i class="fas fa-question-circle"></i> <span class="nav-text" id="faq">الأسئلة الشائعة</span></a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> <span class="nav-text" id="contact">تواصل معنا</span></a></li>
+            </ul>
+
+            <div class="language-switcher">
+                <button class="active" data-lang="ar">العربية</button>
+                <button data-lang="en">English</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="main-content">
+            <header>
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">
+                    <h1 id="page-title">من نحن</h1>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- About Section -->
+                <section id="about" class="section active-section">
+                    <h2 id="about-title">من نحن</h2>
+                    <p id="about-desc">نحن فريق من المبتكرين والمهندسين المتفانين الذين يسعون لجعل حياتك اليومية أكثر أمانًا وسهولة. تأسست شركتنا في عام 2025 بهدف تطوير حلول تقنية مبتكرة لمشاكل الحياة اليومية. </p>
+                    
+                    <p id="about-desc2">الحقيبة الذكية للأدوية هي ثمرة سنوات من البحث والتطوير، صُممت بعناية لتذكيرك بمواعيد تناول الدواء، وحماية أدويتك في مختلف الظروف، وتوفير راحة البال لك ولعائلتك أينما كنت.</p>
+                    
+                    <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+                        <div style="flex: 1;">
+                            <h3 style="color: var(--primary-color); margin-bottom: 1rem;" id="vision-title">رؤيتنا</h3>
+                            <p id="vision-desc"> أن نكون الرواد في ابتكار وتقديم حلول ذكية تعزز أمان الأفراد وتضمن حماية ممتلكاتهم وصحتهم في مختلف جوانب حياتهم اليومية.</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="color: var(--primary-color); margin-bottom: 1rem;" id="mission-title">رسالتنا</h3>
+                            <p id="mission-desc">تطوير منتجات مبتكرة تعتمد على أحدث التقنيات، تهدف إلى توفير الحماية والراحة للمستخدمين، مع الحفاظ على جودة عالية وأسعار مناسبة للجميع.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 3rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;" id="team-title">فريقنا</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem;">
+                            <div style="background: white; padding: 1.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center;">
+                                <img src="vv.png" alt="فريقنا" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 3px solid var(--secondary-color);">
+                                <h4 id="team-member1-name">اليقين العبري</h4>
+                                <p style="color: var(--secondary-color); margin-bottom: 0.5rem;" id="team-member1-role">المدير التنفيذي</p>
+                                <p id="team-member1-desc">خبرة أكثر من سنة في مجال تكنلوجيا و الأمن</p>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center;">
+                                <img src="vv.png" alt="فريقنا" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 3px solid var(--secondary-color);">
+                                <h4 id="team-member2-name">فاطمة العبري</h4>
+                                <p style="color: var(--secondary-color); margin-bottom: 0.5rem;" id="team-member2-role">رئيسة قسم التصميم</p>
+                                <p id="team-member2-desc">مصممة منتجات حائزة على جوائز </p>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center;">
+                                <img src="vv.png" alt="فريقنا" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 3px solid var(--secondary-color);">
+                                <h4 id="team-member3-name">بشرى البلوشي</h4>
+                                <p style="color: var(--secondary-color); margin-bottom: 0.5rem;" id="team-member3-role">رئيس قسم الهندسة</p>
+                                <p id="team-member3-desc">مهندس برمجيات مع خبرة في أنظمة التتبع والأمان</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 id="footer-title">الحقيبة الذكية</h3>
+                    <p id="footer-desc">حل مبتكر لحماية ممتلكاتك وتوفير الراحة في حياتك اليومية</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 id="quick-links-title">روابط سريعة</h3>
+                    <p><a href="index.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">الصفحة الرئيسية</span></a></p>
+                    <p><a href="features.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">المميزات</span></a></p>
+                    <p><a href="how-it-works.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">كيف تعمل</span></a></p>
+                    <p><a href="faq.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">الأسئلة الشائعة</span></a></p>
+                    <p><a href="contact.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">تواصل معنا</span></a></p>
+                </div>
+                <div class="footer-column">
+                    <h3 id="contact-title">تواصل معنا</h3>
+                    <p id="address">سلطنة عمان</p>
+                    <p id="phone">+968 96954422</p>
+                    <p id="email">smartmedicinbag@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p id="copyright-text">© 2023 Smart Medicine Bag. جميع الحقوق محفوظة.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const translations = {
+            ar: {
+                "sidebar-title": "الحقيبة الذكية",
+				'sidebar-title': 'الحقيبة الذكية للأدوية',
+        'sidebar-subtitle': 'ابتكار يحمي ممتلكاتك ويوفر راحتك',
+        'home-link': 'الصفحة الرئيسية',
+        'about-link': 'من نحن',
+        'features-link': 'مميزات الحقيبة',
+        'how-it-works-link': 'كيف تعمل',
+        'faq-link': 'الأسئلة الشائعة',
+        'contact-link': 'تواصل معنا',
+                "sidebar-subtitle": "ابتكار يحمي ممتلكاتك ويوفر راحتك",
+                "page-title": "من نحن",
+                "about-title": "من نحن",
+                "about-desc": "نحن فريق من المبتكرين والمهندسين المتفانين الذين يسعون لجعل حياتك اليومية أكثر أمانًا وسهولة. تأسست شركتنا في عام 2025 بهدف تطوير حلول تقنية مبتكرة لمشاكل الحياة اليومية.",
+                "about-desc2": "الحقيبة الذكية للأدوية هي ثمرة سنوات من البحث والتطوير، صُممت بعناية لتذكيرك بمواعيد تناول الدواء، وحماية أدويتك في مختلف الظروف، وتوفير راحة البال لك ولعائلتك أينما كنت.",
+                "vision-title": "رؤيتنا",
+                "vision-desc": "أن نكون الرواد في ابتكار وتقديم حلول ذكية تعزز أمان الأفراد وتضمن حماية ممتلكاتهم وصحتهم في مختلف جوانب حياتهم اليومية.",
+                "mission-title": "رسالتنا",
+                "mission-desc": "تطوير منتجات مبتكرة تعتمد على أحدث التقنيات، تهدف إلى توفير الحماية والراحة للمستخدمين، مع الحفاظ على جودة عالية وأسعار مناسبة للجميع.",
+                "team-title": "فريقنا",
+                "footer-title": "الحقيبة الذكية",
+                "footer-desc": "حل مبتكر لحماية ممتلكاتك وتوفير الراحة في حياتك اليومية",
+                "quick-links-title": "روابط سريعة",
+                "contact-title": "تواصل معنا",
+                "address": "سلطنة عمان",
+                "phone": "+968 96954422",
+                "email": "smartmedicinbag@gmail.com",
+                "copyright-text": "© 2023 الحقيبة الذكية. جميع الحقوق محفوظة.",
+                "team-member1-name": "اليقين العبري",
+                "team-member1-role": "المدير التنفيذي",
+                "team-member1-desc": "خبرة أكثر من سنة في مجال تكنلوجيا و الأمن",
+                "team-member2-name": "فاطمة العبري",
+                "team-member2-role": "رئيسة قسم التصميم",
+                "team-member2-desc": "مصممة منتجات حائزة على جوائز",
+                "team-member3-name": "بشرى البلوشي",
+                "team-member3-role": "رئيس قسم الهندسة",
+                "team-member3-desc": "مهندس برمجيات مع خبرة في أنظمة التتبع والأمان"
+            },
+            en: {
+                'sidebar-title': 'Smart Medicine Bag',
+        'sidebar-subtitle': 'Innovation that protects your belongings and provides comfort',
+        'home-link': 'Home',
+        'about-link': 'About Us',
+        'features-link': 'Features',
+        'how-it-works-link': 'How It Works',
+        'faq-link': 'FAQ',
+        'contact-link': 'Contact Us',
+                "sidebar-subtitle": "An innovation that protects your belongings and provides comfort",
+                "page-title": "About Us",
+                "about-title": "About Us",
+                "about-desc": "We are a team of dedicated innovators and engineers striving to make your daily life safer and easier. Our company was founded in 2025 with the goal of developing innovative technological solutions to everyday life problems.",
+                "about-desc2": "The Smart Medicine Bag is the result of years of research and development, carefully designed to remind you of medication times, protect your medicines in different conditions, and provide peace of mind for you and your family wherever you are.",
+                "vision-title": "Our Vision",
+                "vision-desc": "To be the leaders in innovating and providing smart solutions that enhance the safety of individuals and ensure the protection of their belongings and health in various aspects of their daily lives.",
+                "mission-title": "Our Mission",
+                "mission-desc": "To develop innovative products based on the latest technologies, aimed at providing protection and comfort for users while maintaining high quality and affordable prices for all.",
+                "team-title": "Our Team",
+                "footer-title": "Smart Medicine Bag",
+                "footer-desc": "An innovative solution to protect your belongings and provide comfort in your daily life",
+                "quick-links-title": "Quick Links",
+                "contact-title": "Contact Us",
+                "address": "Sultanate of Oman",
+                "phone": "+968 96954422",
+                "email": "smartmedicinbag@gmail.com",
+                "copyright-text": "© 2023 Smart Medicine Bag. All rights reserved.",
+                "team-member1-name": "Yaqeen Al-Abri",
+                "team-member1-role": "CEO",
+                "team-member1-desc": "Over a year of experience in technology and security.",
+                "team-member2-name": "Fatimah Al-Abri",
+                "team-member2-role": "Head of Design Department",
+                "team-member2-desc": "Award-winning product designer",
+                "team-member3-name": "Bushra Al-Bulushi",
+                "team-member3-role": "Head of Engineering Department",
+                "team-member3-desc": "Software engineer with expertise in tracking and security systems."
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('[id]').forEach(element => {
+                const key = element.id;
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+
+            // تغيير اتجاه النص
+            if (lang === 'en') {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+            } else {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+            }
+        }
+
+        // إضافة معالج الحدث لأزرار اللغة
+        document.querySelectorAll('.language-switcher button').forEach(button => {
+            button.addEventListener('click', function () {
+                const lang = this.getAttribute('data-lang');
+                changeLanguage(lang);
+                document.querySelectorAll('.language-switcher button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كيف تعمل - الحقيبة الذكية للأدوية </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            flex-direction: column;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100%;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            color: var(--light-color);
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-links a i {
+            margin-left: 10px;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .language-switcher {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0 0.3rem;
+            font-family: inherit;
+        }
+
+        .language-switcher button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-switcher button.active {
+            background: var(--secondary-color);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            transition: var(--transition);
+            min-height: calc(100vh - 100px);
+            padding-bottom: 60px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        /* Content Styles */
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 100px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        /* Steps Styles */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            margin-right: 280px;
+            transition: var(--transition);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: var(--light-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-color);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+                width: 280px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+                width: 100%;
+            }
+
+            footer {
+                margin-right: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .step {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .step-number {
+                margin-left: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+            
+            .page-title h1 {
+                font-size: 1.5rem;
+            }
+            
+            .section h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* RTL and LTR specific styles */
+        html[dir="rtl"] {
+            .sidebar {
+                right: 0;
+            }
+
+            .main-content {
+                margin-right: 280px;
+                margin-left: 0;
+            }
+
+            footer {
+                margin-right: 280px;
+                margin-left: 0;
+            }
+
+            .section h2::after {
+                right: 0;
+                left: auto;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                transform: translateX(-5px);
+            }
+
+            .step-number {
+                margin-left: 1rem;
+                margin-right: 0;
+            }
+
+            @media (max-width: 992px) {
+                .sidebar {
+                    transform: translateX(100%);
+                }
+
+                .main-content {
+                    margin-right: 0;
+                }
+
+                footer {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        html[dir="ltr"] {
+            .sidebar {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 280px;
+                margin-right: 0;
+            }
+
+            footer {
+                margin-left: 280px;
+                margin-right: 0;
+            }
+
+            .section h2::after {
+                left: 0;
+                right: auto;
+            }
+
+            .nav-links a i {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                transform: translateX(5px);
+            }
+
+            .step-number {
+                margin-right: 1rem;
+                margin-left: 0;
+            }
+
+            @media (max-width: 992px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                }
+
+                .main-content {
+                    margin-left: 0;
+                }
+
+                footer {
+                    margin-left: 0;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="nn.jpeg" alt="الحقيبة الذكية">
+                <h2 id="sidebar-title">الحقيبة الذكية للأدوية</h2>
+                <p id="sidebar-subtitle">ابتكار يحمي ممتلكاتك ويوفر راحتك</p>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span class="nav-text">الصفحة الرئيسية</span></a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> <span class="nav-text">من نحن</span></a></li>
+                <li><a href="features.html"><i class="fas fa-star"></i> <span class="nav-text">مميزات الحقيبة</span></a></li>
+                <li><a href="how-it-works.html"><i class="fas fa-cogs"></i> <span class="nav-text">كيف تعمل</span></a></li>
+                <li><a href="faq.html" class="active"><i class="fas fa-question-circle"></i> <span class="nav-text">الأسئلة الشائعة</span></a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> <span class="nav-text">تواصل معنا</span></a></li>
+            </ul>
+
+            <div class="language-switcher">
+                <button class="active" data-lang="ar">العربية</button>
+                <button data-lang="en">English</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="main-content">
+            <header>
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="page-title">
+                    <h1 id="page-title">كيف تعمل الحقيبة الذكية للأدوية</h1>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- How It Works Section -->
+                <section id="how-it-works" class="section active-section">
+                    <h2 id="how-it-works-title">كيف تعمل الحقيبة الذكية للأدوية</h2>
+                    <p id="how-it-works-desc">تعمل الحقيبة الذكية بتقنيات متطورة تتيح لك مراقبة وحماية ممتلكاتك بسهولة من خلال خطوات بسيطة</p>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3 class="step-title">التوصيل والتشغيل</h3>
+                                <p class="step-desc">قم بشحن الحقيبة بالكامل ثم اضغط على زر التشغيل لتفعيل النظام</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3 class="step-title">ربط التطبيق</h3>
+                                <p class="step-desc">قم بتحميل تطبيق الحقيبة الذكية واربطه بالحقيبة عبر البلوتوث</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3 class="step-title">تخصيص الإعدادات</h3>
+                                <p class="step-desc">اضبط إعدادات الحماية والتنبيهات حسب احتياجاتك من خلال التطبيق</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3 class="step-title">الاستخدام اليومي</h3>
+                                <p class="step-desc">احمل الحقيبة كالمعتاد واستمتع بحماية ذكية لممتلكاتك</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 3rem; background-color: var(--light-color); padding: 2rem; border-radius: var(--border-radius);">
+                        <h3 id="protection-title" style="color: var(--primary-color); margin-bottom: 1rem;">نظام الحماية الذكي</h3>
+                        <p id="protection-desc">تعتمد الحقيبة الذكية على تقنيات متعددة لتوفير الحماية المثلى:</p>
+                        <ul id="protection-features" style="margin-top: 1rem; padding-right: 1.5rem;">
+                            <li style="margin-bottom: 0.5rem;">مستشعرات حركة دقيقة لاكتشاف أي محاولة لفتح الحقيبة</li>
+                            <li style="margin-bottom: 0.5rem;">نظام تتبع GPS لتحديد الموقع بدقة</li>
+                            <li style="margin-bottom: 0.5rem;">اتصال بلوتوث منخفض الطاقة لتوفير استهلاك البطارية</li>
+                            <li style="margin-bottom: 0.5rem;">إشعارات فورية على هاتفك عند حدوث أي نشاط غير معتاد</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 id="footer-title">الحقيبة الذكية للأدوية</h3>
+                    <p id="footer-desc">حل مبتكر لحماية ممتلكاتك وتوفير الراحة في حياتك اليومية</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 id="quick-links-title">روابط سريعة</h3>
+                    <p><a href="index.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">الصفحة الرئيسية</span></a></p>
+                    <p><a href="features.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">المميزات</span></a></p>
+                    <p><a href="how-it-works.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">كيف تعمل</span></a></p>
+                    <p><a href="faq.html" style="color: var(--light-color); text-decoration: none;"><span class="footer-link">الأسئلة الشائعة</span></a></p>
+                </div>
+                <div class="footer-column">
+                    <h3 id="contact-title">تواصل معنا</h3>
+                    <p><i class="fas fa-map-marker-alt" style="margin-left: 5px;"></i> <span id="address">سلطنةعمان</span></p>
+                    <p><i class="fas fa-phone" style="margin-left: 5px;"></i> <span id="phone">+968 96954422</span></p>
+                    <p><i class="fas fa-envelope" style="margin-left: 5px;"></i> <span id="email">smartmedicinbag@gmail.com</span></p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 الحقيبة الذكية للأدوية. جميع الحقوق محفوظة</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const langButtons = document.querySelectorAll('.language-switcher button');
+            const htmlElement = document.documentElement;
+
+            // Toggle sidebar on mobile
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+
+            // Handle language switching
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // Update active button
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Change language
+                    if (lang === 'en') {
+                        htmlElement.setAttribute('dir', 'ltr');
+                        htmlElement.setAttribute('lang', 'en');
+                        translateToEnglish();
+                    } else {
+                        htmlElement.setAttribute('dir', 'rtl');
+                        htmlElement.setAttribute('lang', 'ar');
+                        translateToArabic();
+                    }
+                    
+                    // Save language preference
+                    localStorage.setItem('smartBagLang', lang);
+                });
+            });
+
+            // Translation functions
+            function translateToEnglish() {
+                // Page title
+                document.getElementById('page-title').textContent = 'How Smart Bag Works';
+                
+                // Sidebar
+                document.getElementById('sidebar-title').textContent = 'Smart Bag';
+                document.getElementById('sidebar-subtitle').textContent = 'Innovation that protects your belongings';
+                
+                // Nav links
+                const navTexts = ['Home', 'About Us', 'Features', 'How It Works', 'FAQ', 'Contact Us'];
+                document.querySelectorAll('.nav-text').forEach((span, index) => {
+                    span.textContent = navTexts[index];
+                });
+                
+                // How it works section
+                document.getElementById('how-it-works-title').textContent = 'How Smart Bag Works';
+                document.getElementById('how-it-works-desc').textContent = 'The Smart Bag works with advanced technologies that allow you to easily monitor and protect your belongings through simple steps.';
+                
+                // Steps
+                const stepTitles = [
+                    'Power On',
+                    'Connect the App',
+                    'Customize Settings',
+                    'Daily Use'
+                ];
+                
+                const stepDescriptions = [
+                    'Fully charge the bag then press the power button to activate the system',
+                    'Download the Smart Bag app and connect it to the bag via Bluetooth',
+                    'Adjust protection and alert settings according to your needs through the app',
+                    'Carry the bag as usual and enjoy smart protection for your belongings'
+                ];
+                
+                document.querySelectorAll('.step-title').forEach((step, index) => {
+                    step.textContent = stepTitles[index];
+                });
+                
+                document.querySelectorAll('.step-desc').forEach((step, index) => {
+                    step.textContent = stepDescriptions[index];
+                });
+                
+                // Protection system
+                document.getElementById('protection-title').textContent = 'Smart Protection System';
+                document.getElementById('protection-desc').textContent = 'The Smart Bag relies on multiple technologies to provide optimal protection:';
+                
+                const protectionFeatures = [
+                    'Precise motion sensors to detect any attempt to open the bag',
+                    'GPS tracking system for accurate location',
+                    'Low energy Bluetooth connection to save battery',
+                    'Instant notifications on your phone for any unusual activity'
+                ];
+                
+                document.querySelectorAll('#protection-features li').forEach((item, index) => {
+                    item.textContent = protectionFeatures[index];
+                });
+                
+                // Footer
+                document.getElementById('footer-title').textContent = 'Smart Bag';
+                document.getElementById('footer-desc').textContent = 'An innovative solution to protect your belongings and provide comfort in your daily life';
+                document.getElementById('quick-links-title').textContent = 'Quick Links';
+                document.querySelectorAll('.footer-link').forEach((link, index) => {
+                    link.textContent = ['Home', 'Features', 'How It Works', 'FAQ'][index];
+                });
+                document.getElementById('contact-title').textContent = 'Contact Us';
+                document.getElementById('address').textContent = 'Oman';
+                document.getElementById('phone').textContent = '+968 96954422';
+                document.getElementById('email').textContent = 'smartmedicinbag@gmail.com';
+                document.getElementById('copyright-text').textContent = '© 2025 Smart Bag. All Rights Reserved.';
+            }
+
+            function translateToArabic() {
+                // Page title
+                document.getElementById('page-title').textContent = 'كيف تعمل الحقيبة الذكية';
+                
+                // Sidebar
+                document.getElementById('sidebar-title').textContent = 'الحقيبة الذكية';
+                document.getElementById('sidebar-subtitle').textContent = 'ابتكار يحمي ممتلكاتك ويوفر راحتك';
+                
+                // Nav links
+                const navTexts = ['الصفحة الرئيسية', 'من نحن', 'مميزات الحقيبة', 'كيف تعمل', 'الأسئلة الشائعة', 'تواصل معنا'];
+                document.querySelectorAll('.nav-text').forEach((span, index) => {
+                    span.textContent = navTexts[index];
+                });
+                
+                // How it works section
+                document.getElementById('how-it-works-title').textContent = 'كيف تعمل الحقيبة الذكية';
+                document.getElementById('how-it-works-desc').textContent = 'تعمل الحقيبة الذكية بتقنيات متطورة تتيح لك مراقبة وحماية ممتلكاتك بسهولة من خلال خطوات بسيطة';
+                
+                // Steps
+                const stepTitles = [
+                    'التوصيل والتشغيل',
+                    'ربط التطبيق',
+                    'تخصيص الإعدادات',
+                    'الاستخدام اليومي'
+                ];
+                
+                const stepDescriptions = [
+                    'قم بشحن الحقيبة بالكامل ثم اضغط على زر التشغيل لتفعيل النظام',
+                    'قم بتحميل تطبيق الحقيبة الذكية واربطه بالحقيبة عبر البلوتوث',
+                    'اضبط إعدادات الحماية والتنبيهات حسب احتياجاتك من خلال التطبيق',
+                    'احمل الحقيبة كالمعتاد واستمتع بحماية ذكية لممتلكاتك'
+                ];
+                
+                document.querySelectorAll('.step-title').forEach((step, index) => {
+                    step.textContent = stepTitles[index];
+                });
+                
+                document.querySelectorAll('.step-desc').forEach((step, index) => {
+                    step.textContent = stepDescriptions[index];
+                });
+                
+                // Protection system
+                document.getElementById('protection-title').textContent = 'نظام الحماية الذكي';
+                document.getElementById('protection-desc').textContent = 'تعتمد الحقيبة الذكية على تقنيات متعددة لتوفير الحماية المثلى:';
+                
+                const protectionFeatures = [
+                    'مستشعرات حركة دقيقة لاكتشاف أي محاولة لفتح الحقيبة',
+                    'نظام تتبع GPS لتحديد الموقع بدقة',
+                    'اتصال بلوتوث منخفض الطاقة لتوفير استهلاك البطارية',
+                    'إشعارات فورية على هاتفك عند حدوث أي نشاط غير معتاد'
+                ];
+                
+                document.querySelectorAll('#protection-features li').forEach((item, index) => {
+                    item.textContent = protectionFeatures[index];
+                });
+                
+                // Footer
+                document.getElementById('footer-title').textContent = 'الحقيبة الذكية';
+                document.getElementById('footer-desc').textContent = 'حل مبتكر لحماية ممتلكاتك وتوفير الراحة في حياتك اليومية';
+                document.getElementById('quick-links-title').textContent = 'روابط سريعة';
+                document.querySelectorAll('.footer-link').forEach((link, index) => {
+                    link.textContent = ['الصفحة الرئيسية', 'المميزات', 'كيف تعمل', 'الأسئلة الشائعة'][index];
+                });
+                document.getElementById('contact-title').textContent = 'تواصل معنا';
+                document.getElementById('address').textContent = 'سلطنة عمان';
+                document.getElementById('phone').textContent = '+968 96954422';
+                document.getElementById('email').textContent = 'smartmedicinbag@gmail.com';
+                document.getElementById('copyright-text').textContent = '© 2025 الحقيبة الذكية. جميع الحقوق محفوظة.';
+            }
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 992) {
+                    const isClickInsideSidebar = sidebar.contains(e.target);
+                    const isClickOnMenuToggle = e.target === menuToggle || menuToggle.contains(e.target);
+
+                    if (!isClickInsideSidebar && !isClickOnMenuToggle) {
+                        sidebar.classList.remove('active');
+                    }
+                }
+            });
+
+            // Initialize the page
+            function initPage() {
+                // Check if language is saved in localStorage
+                const savedLang = localStorage.getItem('smartBagLang');
+                if (savedLang === 'en') {
+                    document.querySelector('[data-lang="en"]').click();
+                }
+            }
+
+            // Run initialization
+            initPage();
+
+            // Responsive adjustments
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 992) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // Adjust layout on load and resize
+            function adjustLayout() {
+                const sidebarHeight = document.getElementById('sidebar').offsetHeight;
+                const mainContentHeight = document.getElementById('main-content').offsetHeight;
+                const footerHeight = document.querySelector('footer').offsetHeight;
+                
+                const totalHeight = Math.max(sidebarHeight, mainContentHeight + footerHeight);
+                document.querySelector('.container').style.minHeight = totalHeight + 'px';
+            }
+
+            window.addEventListener('load', adjustLayout);
+            window.addEventListener('resize', adjustLayout);
+        });
+    </script>
+</body>
+</html>
